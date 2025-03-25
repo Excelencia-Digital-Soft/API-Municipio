@@ -18,7 +18,9 @@ namespace Repository.Concreter
         public async Task<List<ListadoGeneralDTO>> ListadoGenerarPagos(int pId_Municipio, string pPeriodo, int id_tipo_impuesto, int Tipo)
         {
             using (var context = new MunicipalidadContext())
+
             {
+                //usa SP
                 return await context.Database
                     .SqlQueryRaw<ListadoGeneralDTO>("EXEC GenerarFacturas @pId_Municipio, @pPeriodo, @pid_tipo_impuesto, @Tipo",
                         new SqlParameter("@pId_Municipio", pId_Municipio),
