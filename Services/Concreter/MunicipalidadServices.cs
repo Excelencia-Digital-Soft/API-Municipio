@@ -1,7 +1,6 @@
 ﻿using Domain;
 using Microsoft.Extensions.Logging;
 using Models.DTOs;
-using Repository.Concreter;
 using Repository.Interfaces;
 using Services.Interfaces;
 
@@ -19,7 +18,9 @@ namespace Services.Concreter
         private IDepartamentoRepository _DepartamentoRepository;
         private IContribuyenteRepository _ContribuyenteRepository;
         private IUsuarioRepository _UsuarioRepository;
-        private ILoginGenerarRepository _loginRepository;  
+        private ILoginGenerarRepository _loginRepository;
+        private ITipoImpuestoCRepository _tipoImpuestoCRepository;
+
 
 
 
@@ -27,7 +28,19 @@ namespace Services.Concreter
 
         public IMuniRepository MuniRepository { get => _muniRepository; set => _muniRepository = value; }
 
-        public MunicipalidadServices(IPagoRepository pago, IExceptionsServices exceptionsservices, IUnitOfWork unitOfWork, IBarrioRepository barrioRepository, IMuniRepository muniRepository, IDepartamentoRepository departamentoRepository, ITipoImpuestoRepository tipoImpuestoRepository, IContribuyenteRepository contribuyenteRepository, IUsuarioRepository usuarioRepository, IPagoGenerarRepository pagoGenerarRepository, ILoginGenerarRepository loginRepository, ILogger<MunicipalidadServices> logger)
+        public MunicipalidadServices(IPagoRepository pago,
+                                     IExceptionsServices exceptionsservices,
+                                     IUnitOfWork unitOfWork,
+                                     IBarrioRepository barrioRepository,
+                                     IMuniRepository muniRepository,
+                                     IDepartamentoRepository departamentoRepository,
+                                     ITipoImpuestoRepository tipoImpuestoRepository,
+                                     IContribuyenteRepository contribuyenteRepository,
+                                     IUsuarioRepository usuarioRepository,
+                                     IPagoGenerarRepository pagoGenerarRepository,
+                                     ITipoImpuestoCRepository tipoImpuestoCRepository,
+                                     ILoginGenerarRepository loginRepository,
+                                     ILogger<MunicipalidadServices> logger)
         {
             _pagoRepository = pago;
             _exceptionsservices = exceptionsservices;
@@ -40,6 +53,7 @@ namespace Services.Concreter
             _UsuarioRepository = usuarioRepository;
             _pagoGenerarRepository = pagoGenerarRepository;
             _loginRepository = loginRepository;
+            _tipoImpuestoCRepository = tipoImpuestoCRepository;
 
             _logger = logger;
         }
@@ -152,7 +166,34 @@ namespace Services.Concreter
 
             return respuesta;
         }
-             public async Task<Respuesta> getDepartamento(ListadoDepartamentoDTO datos)
+        public async Task<Respuesta> getTipoImpuestoC(ListadoTipoImpuestoCDTO datos, int id_municipio)
+        {
+            Respuesta respuesta = new Respuesta();
+            respuesta.Message = "User";
+
+            try
+            {
+                var muni =  await _tipoImpuestoCRepository.getTipoImpuestoC(datos.pContribuyenteId, id_municipio);
+                if (muni is null)
+                {
+                    respuesta.Message = "Listado Sin datos";
+                    return respuesta;
+                }
+                respuesta.Data = muni;
+                respuesta.Success = true;
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "ERROR");
+                respuesta.Success = false;
+                respuesta.Data = 0;
+                respuesta.Message = ex.Message;
+            }
+
+            return respuesta;
+        }
+        public async Task<Respuesta> getDepartamento(ListadoDepartamentoDTO datos)
         {
             Respuesta respuesta = new Respuesta();
             respuesta.Message = "User";

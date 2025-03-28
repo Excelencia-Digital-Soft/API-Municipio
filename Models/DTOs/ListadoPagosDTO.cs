@@ -123,6 +123,27 @@ namespace Models.DTOs
         public int pId { get; set; }
 
     }
+    public class ListadoTipoImpuestoCDTO
+    {
+        public int pContribuyenteId { get; set; }
+
+    }
+    public class ListadoGeneralListadoTipoImpuestoCDTO
+    {
+        public string id_inmueble { get; set; }
+        public string direccion_inmueble { get; set; }
+        public string mza { get; set; }
+        public string lote { get; set; }
+        public string zona { get; set; }
+        public string area_total { get; set; }
+        public string id_tipoimpuesto { get; set; }
+        public string id_contribuyente { get; set; }
+        public string nombres { get; set; }
+        public string apellidos { get; set; }
+        public string nombre_impuesto { get; set; }
+        
+       
+    }
     public class ListadoGeneralListadoTipoImpuestoDTO
     {
         public string id_tipo_impuesto { get; set; }
@@ -133,7 +154,7 @@ namespace Models.DTOs
         public DateTime fecha_vigencia_fin { get; set; }
 
         
-            
+          
 
 
 
