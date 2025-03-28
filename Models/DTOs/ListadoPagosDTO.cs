@@ -125,10 +125,10 @@ namespace Models.DTOs
     }
     public class ListadoGeneralListadoTipoImpuestoDTO
     {
-        public int id_tipo_impuesto { get; set; }
+        public string id_tipo_impuesto { get; set; }
         public string nombre { get; set; }
         public string descripcion { get; set; }
-        public decimal porcentaje_tasa { get; set; }
+        public string porcentaje_tasa { get; set; }
         public DateTime fecha_vigencia_inicio { get; set; }
         public DateTime fecha_vigencia_fin { get; set; }
 

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
+﻿
 using Microsoft.EntityFrameworkCore;
 
 namespace Models.Municipalidad;
@@ -31,7 +29,9 @@ public partial class MunicipalidadContext : DbContext
     public virtual DbSet<Contribuyente> Contribuyentes { get; set; }
     public virtual DbSet<Usuario> Usuarios { get; set; }
     public virtual DbSet<Inmueble> Inmuebles { get; set; }
-    
+
+    //public virtual DbSet<TipoImpuestoDetalle> tipoimpuestodetalles { get; set; }
+
 
 
 
@@ -50,6 +50,11 @@ public partial class MunicipalidadContext : DbContext
 
              
         });
+        //modelBuilder.Entity<TipoImpuestoDetalle>(entity =>
+        //{
+        //    entity.HasKey(e => e.id_tipoimpuesto);
+        //    entity.ToTable("tipoimpuestodetalles");
+        //});
         modelBuilder.Entity<Pago>(entity =>
         {
             entity.HasKey(e => e.id_pago);
