@@ -23,6 +23,7 @@ namespace Repository
             services.AddScoped<IPagoGenerarRepository, PagoGenerarRepository>();
             services.AddScoped<ILoginGenerarRepository, LoginRepository>();
             services.AddScoped<ITipoImpuestoCRepository, TipoImpuestoCRepository>();
+            services.AddScoped<IRelacionImpuestoRepository, RelacionImpuestoRepository>();
 
 
 

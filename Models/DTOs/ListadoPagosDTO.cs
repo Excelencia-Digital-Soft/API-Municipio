@@ -128,6 +128,22 @@ namespace Models.DTOs
         public int pContribuyenteId { get; set; }
 
     }
+    public class RelacionDTO
+    {
+        public string periodo { get; set; }
+        public long id_contribuyente { get; set; }
+        public long id_tipoimpuesto { get; set; }
+        public int id_municipio { get; set; }
+
+    }
+    public class ListarRelacionDTO
+    {
+        public string periodo { get; set; } = string.Empty;
+        public string id_contribuyente { get; set; } = string.Empty;
+        public string id_tipoimpuesto { get; set; } = string.Empty;
+        public string id_municipio { get; set; } = string.Empty;
+
+    }
     public class ListadoGeneralListadoTipoImpuestoCDTO
     {
         public string id_inmueble { get; set; }

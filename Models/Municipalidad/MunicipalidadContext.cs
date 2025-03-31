@@ -1,5 +1,4 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Models.Municipalidad;
 
@@ -30,7 +29,8 @@ public partial class MunicipalidadContext : DbContext
     public virtual DbSet<Usuario> Usuarios { get; set; }
     public virtual DbSet<Inmueble> Inmuebles { get; set; }
 
-    //public virtual DbSet<TipoImpuestoDetalle> tipoimpuestodetalles { get; set; }
+    public virtual DbSet<RelacionImpuesto> RelacionImpuestos { get; set; }
+    public virtual DbSet<TipoImpuestoDetalle> TipoImpuestoDetalles { get; set; }
 
 
 
@@ -59,6 +59,11 @@ public partial class MunicipalidadContext : DbContext
         {
             entity.HasKey(e => e.id_pago);
             entity.ToTable("pagos");
+        });
+        modelBuilder.Entity<TipoImpuestoDetalle>(entity =>
+        {
+            entity.HasKey(e => e.id_tipo_impuesto);
+            entity.ToTable("TipoImpuestoDetalles");
         });
         modelBuilder.Entity<Factura>(entity =>
         {

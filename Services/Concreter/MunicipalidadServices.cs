@@ -1,6 +1,7 @@
 ﻿using Domain;
 using Microsoft.Extensions.Logging;
 using Models.DTOs;
+using Repository.Concreter;
 using Repository.Interfaces;
 using Services.Interfaces;
 
@@ -20,6 +21,7 @@ namespace Services.Concreter
         private IUsuarioRepository _UsuarioRepository;
         private ILoginGenerarRepository _loginRepository;
         private ITipoImpuestoCRepository _tipoImpuestoCRepository;
+        private IRelacionImpuestoRepository _relacionImpuestoRepository;
 
 
 
@@ -40,6 +42,7 @@ namespace Services.Concreter
                                      IPagoGenerarRepository pagoGenerarRepository,
                                      ITipoImpuestoCRepository tipoImpuestoCRepository,
                                      ILoginGenerarRepository loginRepository,
+                                     IRelacionImpuestoRepository relacionImpuestoRepository,
                                      ILogger<MunicipalidadServices> logger)
         {
             _pagoRepository = pago;
@@ -54,6 +57,7 @@ namespace Services.Concreter
             _pagoGenerarRepository = pagoGenerarRepository;
             _loginRepository = loginRepository;
             _tipoImpuestoCRepository = tipoImpuestoCRepository;
+            _relacionImpuestoRepository = relacionImpuestoRepository;
 
             _logger = logger;
         }
@@ -174,6 +178,34 @@ namespace Services.Concreter
             try
             {
                 var muni =  await _tipoImpuestoCRepository.getTipoImpuestoC(datos.pContribuyenteId, id_municipio);
+                if (muni is null)
+                {
+                    respuesta.Message = "Listado Sin datos";
+                    return respuesta;
+                }
+                respuesta.Data = muni;
+                respuesta.Success = true;
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "ERROR");
+                respuesta.Success = false;
+                respuesta.Data = 0;
+                respuesta.Message = ex.Message;
+            }
+
+            return respuesta;
+        }
+        public async Task<Respuesta> getRelacion(RelacionDTO datos, int id_municipio)
+        {
+            Respuesta respuesta = new Respuesta();
+            respuesta.Message = "User";
+
+            try
+            {
+                await _relacionImpuestoRepository.GrabarRelacion(datos.periodo, datos.id_contribuyente, datos.id_tipoimpuesto, id_municipio);
+                var muni = await _relacionImpuestoRepository.ListarDatos(id_municipio, datos.id_contribuyente);
                 if (muni is null)
                 {
                     respuesta.Message = "Listado Sin datos";
