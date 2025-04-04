@@ -17,6 +17,7 @@ namespace Services.Interfaces
         Task<Respuesta> getLoginGenerar(LoginDto datos);
         Task<Respuesta> getTipoImpuestoC(ListadoTipoImpuestoCDTO datos, int id_municipio);
         Task<Respuesta> getRelacion(RelacionDTO datos, int id_municipio);
+        Task<Respuesta> postGrabarTipoImpuesto(GrabarTipoImpuestoDTO datos, int id_municipio);
 
     }
 }

@@ -22,6 +22,7 @@ namespace Services.Concreter
         private ILoginGenerarRepository _loginRepository;
         private ITipoImpuestoCRepository _tipoImpuestoCRepository;
         private IRelacionImpuestoRepository _relacionImpuestoRepository;
+        private ITipoImpuestoGrabarRepository _tipoImpuestoGrabarRepository;
 
 
 
@@ -43,6 +44,7 @@ namespace Services.Concreter
                                      ITipoImpuestoCRepository tipoImpuestoCRepository,
                                      ILoginGenerarRepository loginRepository,
                                      IRelacionImpuestoRepository relacionImpuestoRepository,
+                                     ITipoImpuestoGrabarRepository tipoImpuestoGrabarRepository,
                                      ILogger<MunicipalidadServices> logger)
         {
             _pagoRepository = pago;
@@ -151,6 +153,37 @@ namespace Services.Concreter
             try
             {
                 var muni = await _tipoImpuestoRepository.getTipoImpuesto(datos.pId,id_municipio);
+                if (muni is null)
+                {
+                    respuesta.Message = "Listado Sin datos";
+                    return respuesta;
+                }
+                respuesta.Data = muni;
+                respuesta.Success = true;
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "ERROR");
+                respuesta.Success = false;
+                respuesta.Data = 0;
+                respuesta.Message = ex.Message;
+            }
+
+            return respuesta;
+        }
+        public async Task<Respuesta> postGrabarTipoImpuesto(GrabarTipoImpuestoDTO datos, int id_municipio)
+        {
+            Respuesta respuesta = new Respuesta();
+            respuesta.Message = "User";
+
+            try
+            {
+                //await _relacionImpuestoRepository.GrabarRelacion(datos.periodo, datos.id_contribuyente, datos.id_tipoimpuesto, id_municipio);
+                //var muni = await _relacionImpuestoRepository.ListarDatos(id_municipio, datos.id_contribuyente);
+
+                await _tipoImpuestoGrabarRepository.postGrabarTipoImpuesto(datos.nombre_impuesto, datos.descripcion, datos.tipo, datos.fijo, id_municipio);
+                var muni = await _tipoImpuestoGrabarRepository.ListarDatos(id_municipio);
                 if (muni is null)
                 {
                     respuesta.Message = "Listado Sin datos";

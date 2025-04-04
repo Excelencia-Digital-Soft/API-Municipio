@@ -31,6 +31,7 @@ public partial class MunicipalidadContext : DbContext
 
     public virtual DbSet<RelacionImpuesto> RelacionImpuestos { get; set; }
     public virtual DbSet<TipoImpuestoDetalle> TipoImpuestoDetalles { get; set; }
+    
 
 
 
@@ -50,11 +51,11 @@ public partial class MunicipalidadContext : DbContext
 
              
         });
-        //modelBuilder.Entity<TipoImpuestoDetalle>(entity =>
-        //{
-        //    entity.HasKey(e => e.id_tipoimpuesto);
-        //    entity.ToTable("tipoimpuestodetalles");
-        //});
+        modelBuilder.Entity<TipoImpuesto>(entity =>
+        {
+            entity.HasKey(e => e.id_tipo_impuesto);
+                  entity.ToTable("tipoimpuestos");
+        });
         modelBuilder.Entity<Pago>(entity =>
         {
             entity.HasKey(e => e.id_pago);

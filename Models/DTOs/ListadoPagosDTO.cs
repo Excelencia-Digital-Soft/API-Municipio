@@ -136,6 +136,14 @@ namespace Models.DTOs
         public int id_municipio { get; set; }
 
     }
+    public class GrabarTipoImpuestoDTO
+    {
+        public string nombre_impuesto { get; set; }
+        public string descripcion { get; set; }
+        public string fijo { get; set; }
+        public string tipo { get; set; }
+
+    }
     public class ListarRelacionDTO
     {
         public string periodo { get; set; } = string.Empty;

@@ -5,6 +5,7 @@ namespace Models.Municipalidad;
 [Table("TipoImpuesto")]
 public partial class TipoImpuesto
 {
+    public int fijo;
 
     [Key]
     public int id_tipo_impuesto { get; set; }
