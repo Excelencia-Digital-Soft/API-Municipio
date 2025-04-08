@@ -23,6 +23,7 @@ namespace Services.Concreter
         private ITipoImpuestoCRepository _tipoImpuestoCRepository;
         private IRelacionImpuestoRepository _relacionImpuestoRepository;
         private ITipoImpuestoGrabarRepository _tipoImpuestoGrabarRepository;
+        private ITipoImpuestoGrabarDetRepository _tipoImpuestoGrabarDetRepository;
 
 
 
@@ -45,6 +46,7 @@ namespace Services.Concreter
                                      ILoginGenerarRepository loginRepository,
                                      IRelacionImpuestoRepository relacionImpuestoRepository,
                                      ITipoImpuestoGrabarRepository tipoImpuestoGrabarRepository,
+                                     ITipoImpuestoGrabarDetRepository tipoImpuestoGrabarDetRepository,
                                      ILogger<MunicipalidadServices> logger)
         {
             _pagoRepository = pago;
@@ -60,6 +62,8 @@ namespace Services.Concreter
             _loginRepository = loginRepository;
             _tipoImpuestoCRepository = tipoImpuestoCRepository;
             _relacionImpuestoRepository = relacionImpuestoRepository;
+            _tipoImpuestoGrabarRepository = tipoImpuestoGrabarRepository;
+            _tipoImpuestoGrabarDetRepository = tipoImpuestoGrabarDetRepository;
 
             _logger = logger;
         }
@@ -179,10 +183,39 @@ namespace Services.Concreter
 
             try
             {
-                //await _relacionImpuestoRepository.GrabarRelacion(datos.periodo, datos.id_contribuyente, datos.id_tipoimpuesto, id_municipio);
-                //var muni = await _relacionImpuestoRepository.ListarDatos(id_municipio, datos.id_contribuyente);
+                
 
                 await _tipoImpuestoGrabarRepository.postGrabarTipoImpuesto(datos.nombre_impuesto, datos.descripcion, datos.tipo, datos.fijo, id_municipio);
+                var muni = await _tipoImpuestoGrabarRepository.ListarDatos(id_municipio);
+                if (muni is null)
+                {
+                    respuesta.Message = "Listado Sin datos";
+                    return respuesta;
+                }
+                respuesta.Data = muni;
+                respuesta.Success = true;
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "ERROR");
+                respuesta.Success = false;
+                respuesta.Data = 0;
+                respuesta.Message = ex.Message;
+            }
+
+            return respuesta;
+        }
+        public async Task<Respuesta> postGrabarTipoImpuestoDet(GrabarTipoImpuestoDetDTO datos, int id_municipio)
+        {
+            Respuesta respuesta = new Respuesta();
+            respuesta.Message = "User";
+
+            try
+            {
+
+
+                await _tipoImpuestoGrabarDetRepository.postGrabarTipoImpuestoDet(datos.detalle, datos.tasa, datos.fecha_vigencia_inicio, datos.id_tipoImpuesto, id_municipio);
                 var muni = await _tipoImpuestoGrabarRepository.ListarDatos(id_municipio);
                 if (muni is null)
                 {

@@ -144,6 +144,14 @@ namespace Models.DTOs
         public string tipo { get; set; }
 
     }
+    public class GrabarTipoImpuestoDetDTO
+    {
+        public string detalle { get; set; }
+        public string tasa { get; set; }
+        public string fecha_vigencia_inicio { get; set; }
+        public string id_tipoImpuesto { get; set; }
+
+    }
     public class ListarRelacionDTO
     {
         public string periodo { get; set; } = string.Empty;

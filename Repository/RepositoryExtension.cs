@@ -25,6 +25,7 @@ namespace Repository
             services.AddScoped<ITipoImpuestoCRepository, TipoImpuestoCRepository>();
             services.AddScoped<IRelacionImpuestoRepository, RelacionImpuestoRepository>();
             services.AddScoped<ITipoImpuestoGrabarRepository, TipoImpuestoGrabarRepository>();
+            services.AddScoped<ITipoImpuestoGrabarDetRepository, TipoImpuestoGrabarDetRepository>();
 
 
 

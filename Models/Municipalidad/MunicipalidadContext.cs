@@ -51,11 +51,7 @@ public partial class MunicipalidadContext : DbContext
 
              
         });
-        modelBuilder.Entity<TipoImpuesto>(entity =>
-        {
-            entity.HasKey(e => e.id_tipo_impuesto);
-                  entity.ToTable("tipoimpuestos");
-        });
+
         modelBuilder.Entity<Pago>(entity =>
         {
             entity.HasKey(e => e.id_pago);
@@ -63,9 +59,13 @@ public partial class MunicipalidadContext : DbContext
         });
         modelBuilder.Entity<TipoImpuestoDetalle>(entity =>
         {
-            entity.HasKey(e => e.id_tipo_impuesto);
-            entity.ToTable("TipoImpuestoDetalles");
+            entity.ToTable("TipoImpuestoDetalle"); // <- nombre exacto como en SQL
         });
+        //modelBuilder.Entity<TipoImpuestoDetalle>(entity =>
+        //{
+        //    entity.HasKey(e => e.id_tipo_impuesto);
+        //    entity.ToTable("TipoImpuestoDetalles");
+        //});
         modelBuilder.Entity<Factura>(entity =>
         {
             entity.HasKey(e => e.id_factura); // Definir clave primaria
